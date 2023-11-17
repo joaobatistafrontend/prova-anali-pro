@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Home página</h2>
+    <p>Seja bem-vindo - {% if user.is_authenticated %}{{ user.username }} {% else %}visitante{% endif %}</p>
+    
+    {% if user.is_authenticated %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Emitir ART</button>
+        </form>
+
+        {% if arts %}
+        <h3>ARTs emitidas:</h3>
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Noparticipacaome</th>
+                    <th scope="col">anexos</th>
+                    <th scope="col">motivos</th>
+                    <th scope="col">normas_compliance</th>
+                    <th scope="col">dados_contratante</th>
+                    <th scope="col">art</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for art in arts %}
+                        <th scope="row"></th>
+                        <td>{{ art.participacao }}</td>
+                        <td>{{ art.anexos }}</td>
+                        <td>{{ art.motivos }}</td>
+                        <td>{{ art.normas_compliance }}</td>
+                        <td>{{ art.dados_contratante }}</td>
+                        <td>{{ art.user }}</td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        <ul>
+            </ul>
+        {% endif %}
+    {% endif %}
+{% endblock %}
